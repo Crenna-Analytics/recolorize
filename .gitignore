@@ -1,0 +1,6 @@
+.venv/*
+*.pth
+video/*
+test/*
+out/*
+input/*/*
