@@ -58,5 +58,5 @@ class PhotoColorizer:
 if __name__ == '__main__':
     give_color = PhotoColorizer(True)
     url: str = 'https://firebasestorage.googleapis.com/v0/b/crenna-analyti.appspot.com/o/images%2Ff27da5ff-2f2a-47c3-b679-4e1fdfeed6d2.jpg?alt=media&token=e39cd884-0117-4623-895f-49153e4c2449&_gl=1*10kloi5*_ga*MjE0MzQzNDMyLjE2OTY5MTA3Nzg.*_ga_CW55HF8NVT*MTY5OTQ1NTY0Ni42LjEuMTY5OTQ1ODI5NS40My4wLjA.'
-    give_color.colorize_from_url(url, render_factor_=20)
-    #give_color.colorize_from_file(filename='chaplin_cake.gif', test=True)
+    #give_color.colorize_from_url(url, render_factor_=20)
+    give_color.colorize_from_file(filename='705065_483665588322865_1952058066_o.jpg', test=True)
