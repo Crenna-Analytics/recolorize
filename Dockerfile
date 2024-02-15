@@ -11,8 +11,12 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip3 install -r requirements.txt
 
-EXPOSE 8007
+COPY . .
 
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
+EXPOSE 8501
+
+RUN mkdir models
+RUN mkdir temp
+RUN mkdir result_images
 
 ENTRYPOINT ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]

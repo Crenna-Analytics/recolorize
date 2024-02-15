@@ -16,3 +16,4 @@ ipywidgets
 deoldify
 streamlit
 streamlit-webrtc
+wget

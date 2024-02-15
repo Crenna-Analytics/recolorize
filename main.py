@@ -7,9 +7,7 @@ import asyncio
 import uuid
 import streamlit as st
 
-eccv16: bool  = False
-siggraph17: bool = False
-deoldify: bool = False
+model: str = 'deoldify'
 artistic: bool = True
 render_factor: int = 0
 
@@ -31,11 +29,11 @@ async def process_images(files, progress_bar):
         
         save_image_from_bytes(bytes_data, final_filename)
         
-        if eccv16:
+        if model == 'eccv16':
             colorizer.colorize_from_file_eccv16(f'{uuid_}.{file_format}')
-        elif siggraph17:
+        elif model == 'siggraph17':
             colorizer.colorize_from_file_siggraph17(f'{uuid_}.{file_format}')
-        elif deoldify:
+        elif model == 'deoldify':
             colorizer.colorize_from_file(f'{uuid_}.{file_format}',
                                         render_factor=render_factor)
         
@@ -47,20 +45,25 @@ async def process_images(files, progress_bar):
         await asyncio.sleep(0)  # Permitir que Streamlit actualice la interfaz gráfica
     
     del colorizer
-    
+
+st.set_page_config(page_title="Portal",
+                   page_icon="	:camera_with_flash:",
+                   layout="centered",
+                   menu_items={
+                       'About' : 'giulicrenna@gmail.com'
+                   })
+
 st.title("Recolorización de fotos")
 
-files: List = st.file_uploader("Seleccionar fotos a recolorear.", accept_multiple_files=True)
+files: List = st.file_uploader("Seleccionar fotos a recolorear.",
+                               accept_multiple_files=True,
+                               type=['png', 'jpg', 'jpeg'])
 
 
 artistic = st.toggle('Modo artístico',
                      value=True)
-eccv16 = st.toggle('eccv16',
-                     value=False)
-siggraph17 = st.toggle('siggraph17',
-                     value=False)
-deoldify = st.toggle('deoldify',
-                     value=False)
+
+model = st.selectbox('Seleccionar modelo', ('deoldify', 'eccv16', 'siggraph17'))
 
 render_factor = st.slider('Factor de renderización',
                           min_value=7,

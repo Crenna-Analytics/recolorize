@@ -21,11 +21,39 @@ torch.backends.cudnn.benchmark=True
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning, message=".*?Your .*? set is empty.*?")
 
-MODELS_PATH: str = os.path.join(os.getcwd(), 'src', 'models')
+MODELS_PATH: str = os.path.join(os.getcwd(), 'models')
 OUTPUT_PATH: str = os.path.join(os.getcwd(), 'result_images')
 INPUT_FILES: str = os.path.join(os.getcwd(), 'temp')
 TEST_FILES: str = os.path.join(os.getcwd(), 'test')
 
+files: list = os.listdir(MODELS_PATH)
+
+if 'ColorizeArtistic_gen.pth' not in files:
+    import wget
+    wget.download('https://file-browser.crennaanalytica.com.ar/filebrowser/api/public/dl/KscNZwvV/ColorizeArtistic_gen.pth',
+                  os.path.join(MODELS_PATH, 'ColorizeArtistic_gen.pth'))
+    
+if 'ColorizeStable_gen.pth' not in files:
+    import wget
+    wget.download('https://file-browser.crennaanalytica.com.ar/filebrowser/api/public/dl/ljCmGOa1/ColorizeStable_gen.pth',
+                   os.path.join(MODELS_PATH, 'ColorizeStable_gen.pth'))
+
+if 'ColorizeVideo_gen.pth' not in files: 
+    import wget
+    wget.download('https://file-browser.crennaanalytica.com.ar/filebrowser/api/public/dl/g4MnuUjG/ColorizeVideo_gen.pth',
+                os.path.join(MODELS_PATH, 'ColorizeVideo_gen.pth'))
+
+if 'siggraph17-df00044c.pth' not in files: 
+    import wget
+    wget.download('https://file-browser.crennaanalytica.com.ar/filebrowser/api/public/dl/VTrJ1qw3/siggraph17-df00044c.pth',
+     os.path.join(MODELS_PATH, 'siggraph17-df00044c.pth'))
+
+if 'colorization_release_v2-9b330a0b.pth' not in files: 
+    import wget
+    wget.download('https://file-browser.crennaanalytica.com.ar/filebrowser/api/public/dl/_0Adl2qg/colorization_release_v2-9b330a0b.pth',
+     os.path.join(MODELS_PATH, 'colorization_release_v2-9b330a0b.pth'))
+
+  
 class PhotoColorizer:
     def __init__(self, artistic: bool = True) -> None:
         self.colorizer = get_image_colorizer(artistic=artistic)
