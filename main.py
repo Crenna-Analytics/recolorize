@@ -69,7 +69,7 @@ model = st.selectbox('Seleccionar modelo', ('deoldify', 'eccv16', 'siggraph17'))
 
 render_factor = st.slider('Factor de renderización',
                           min_value=7,
-                          max_value=40,
+                          max_value=50,
                           value= 31,
                           step=1)
 
