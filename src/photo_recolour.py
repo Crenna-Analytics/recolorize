@@ -88,6 +88,7 @@ class PhotoColorizer:
     
     def colorize_from_file_eccv16(self, filename: str) -> None:
         colorizer_eccv16 = eccv16(pretrained=True).eval()
+        
         image = load_img(os.path.join(INPUT_FILES, filename))
         
         output_file_path: str = os.path.join(OUTPUT_PATH, filename)

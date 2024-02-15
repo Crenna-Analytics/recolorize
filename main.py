@@ -13,7 +13,7 @@ render_factor: int = 0
 
 def save_image_from_bytes(bytes_data, file_path):
     image_stream = io.BytesIO(bytes_data)
-    image = Image.open(image_stream)
+    image = Image.open(image_stream).convert('RGB')
     image.save(file_path)
 
 async def process_images(files, progress_bar):
@@ -22,22 +22,24 @@ async def process_images(files, progress_bar):
     
     for idx, file in enumerate(deepcopy(files)):
         file_format = file.name.split(".")[-1]
+        if file_format == 'png': file_format = 'jpg'
         uuid_ = uuid.uuid4() 
-        final_filename: str = f'temp/{uuid_}.{file_format}'
+        final_filename: str = f'{uuid_}.{file_format}'
+        final_path: str = f'temp/{final_filename}'
         
         bytes_data = file.read()
         
-        save_image_from_bytes(bytes_data, final_filename)
+        save_image_from_bytes(bytes_data, final_path)
         
         if model == 'eccv16':
-            colorizer.colorize_from_file_eccv16(f'{uuid_}.{file_format}')
+            colorizer.colorize_from_file_eccv16(final_filename)
         elif model == 'siggraph17':
-            colorizer.colorize_from_file_siggraph17(f'{uuid_}.{file_format}')
+            colorizer.colorize_from_file_siggraph17(final_filename)
         elif model == 'deoldify':
-            colorizer.colorize_from_file(f'{uuid_}.{file_format}',
+            colorizer.colorize_from_file(final_filename,
                                         render_factor=render_factor)
         
-        result_image_path = f'result_images/{uuid_}.{file_format}'
+        result_image_path = f'result_images/{final_filename}'
         
         st.image(result_image_path)
         progress_bar.progress((idx + 1) / total_files)
