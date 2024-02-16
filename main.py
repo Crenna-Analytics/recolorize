@@ -7,6 +7,13 @@ import asyncio
 import uuid
 import streamlit as st
 
+st.set_page_config(page_title="Portal",
+                   page_icon="	:camera_with_flash:",
+                   layout="centered",
+                   menu_items={
+                       'About' : 'giulicrenna@gmail.com'
+                   })
+
 model: str = 'deoldify'
 artistic: bool = True
 render_factor: int = 0
@@ -15,6 +22,7 @@ def save_image_from_bytes(bytes_data, file_path):
     image_stream = io.BytesIO(bytes_data)
     image = Image.open(image_stream).convert('RGB')
     image.save(file_path)
+
 
 async def process_images(files, progress_bar):
     colorizer = PhotoColorizer(artistic=artistic)
@@ -48,24 +56,19 @@ async def process_images(files, progress_bar):
     
     del colorizer
 
-st.set_page_config(page_title="Portal",
-                   page_icon="	:camera_with_flash:",
-                   layout="centered",
-                   menu_items={
-                       'About' : 'giulicrenna@gmail.com'
-                   })
 
 st.title("Recolorización de fotos")
+
 
 files: List = st.file_uploader("Seleccionar fotos a recolorear.",
                                accept_multiple_files=True,
                                type=['png', 'jpg', 'jpeg'])
 
-
 artistic = st.toggle('Modo artístico',
                      value=True)
 
-model = st.selectbox('Seleccionar modelo', ('deoldify', 'eccv16', 'siggraph17'))
+model = st.selectbox('Seleccionar modelo',
+                     ('deoldify', 'eccv16', 'siggraph17'))
 
 render_factor = st.slider('Factor de renderización',
                           min_value=7,
@@ -87,7 +90,8 @@ with no_proc:
 
 with proc:
         st.header('Imágenes restauradas')
-        
+
+
 if restore_button:
     with proc:
         loop = asyncio.new_event_loop()
