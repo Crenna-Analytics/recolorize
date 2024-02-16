@@ -1,13 +1,14 @@
-FROM python:3.9-slim
+FROM ubuntu
+
+RUN apt-get update --fix-missing -y 
+RUN apt-get install -y bash
+RUN apt-get install wget -y
+RUN apt-get install zip -y
+RUN apt-get install python3.11 -y
+RUN apt-get install ffmpeg libsm6 libxext6  -y
+RUN apt-get install python3-pip python3-dev -y
 
 WORKDIR /app
-
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    software-properties-common \
-    git \
-    && rm -rf /var/lib/apt/lists/*
 
 COPY . .
 
@@ -19,4 +20,4 @@ RUN mkdir models
 RUN mkdir temp
 RUN mkdir result_images
 
-ENTRYPOINT ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "main.py", "--server.port=8501", "--server.address=0.0.0.0"]

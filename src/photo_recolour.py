@@ -77,11 +77,11 @@ class PhotoColorizer:
                           test: bool = False) -> None:
         if filename != None and filename != "":
             filename: str = os.path.join(TEST_FILES, filename) if test else os.path.join(INPUT_FILES, filename)
-            video_uuid: str =  uuid.uuid4()
             VIDEO_PATH: str = self.colorizer.plot_transformed_image(
                                                                path = filename,
                                                                render_factor=render_factor,
-                                                               watermarked=False)
+                                                               watermarked=False,
+                                                               compare=True)
             return VIDEO_PATH
         
         return None
